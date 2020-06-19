@@ -1,0 +1,46 @@
+version: '3.7'
+services: 
+    comments_service:
+        image: node:alpine
+        container_name: comments_service
+        restart: on-failure
+        ports: 
+            - "4001:4001"
+        volumes: 
+            - ./comments:/app
+            - /app/node_modules
+        working_dir: /app
+        command: /bin/sh -c "npm install && npm i -g nodemon && npm run start"
+    posts_service:
+        image: node:alpine
+        container_name: posts_service
+        restart: on-failure
+        ports: 
+            - "4000:4000"
+        volumes: 
+            - ./posts:/app
+            - /app/node_modules
+        working_dir: /app
+        command: /bin/sh -c "npm install && npm i -g nodemon && npm run start"
+    eventbus:
+        image: node:alpine
+        container_name: eventbus
+        restart: on-failure
+        ports: 
+            - "4005:4005"
+        volumes:
+            - ./event-bus:/app
+            - /app/node_modules
+        working_dir: /app
+        command: /bin/sh -c "npm install && npm i -g nodemon && npm run start"
+    query_service:
+        image: node:alpine
+        container_name: query_service
+        restart: on-failure
+        ports: 
+            - "4002:4002"
+        volumes:
+            - ./query:/app
+            - /app/node_modules
+        working_dir: /app
+        command: /bin/sh -c "npm install && npm i -g nodemon && npm run start"
